@@ -48,7 +48,9 @@ delay varying between 1 and 120 seconds after the circuit closes back again. The
  }
  }
 
-
+Redis::funnel('slow_service')
+ ->limit(5)
+ ->then(function () {
         $response = Http::acceptJson()
                    ->timeout(10)
                    ->get('...');
@@ -69,5 +71,6 @@ delay varying between 1 and 120 seconds after the circuit closes back again. The
 
           return $this->release(600);
         }
+    }
     }
 }
