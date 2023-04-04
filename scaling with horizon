@@ -1,0 +1,11 @@
+- Scaling out means adding more workers, scaling in means
+removing workers. Adding/Removing workers (or servers) is called
+Horizontal Scaling. Increasing/Decreasing resources of a single server is called Vertical Scaling.
+
+processor
+- Horizon decides the number of workers to allocate based on the expected
+time to clear per queue. So if the jobs in the deployments queue take more
+time to run while jobs in the notifications queue run instantly, even if the
+notifications queue has more jobs than the deployments queue, Horizon
+will still allocate more workers to the deployments queue since it has the
+higher time-to-clear

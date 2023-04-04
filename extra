@@ -1,0 +1,19 @@
+php artisan queue:work --sleep=1
+Adding More vCPUs
+Using a Shared vCPU
+Shared vCPUs are a good option for low to medium workloads with
+occasional bursts for brief periods of time. They are cheaper than machines
+that come with dedicated vCPUs so I recommend you start with this option
+if you're not sure yet about what you need.
+Choosing the Right Amount of RAM
+For example; if you are caching values in a static array or a property of a
+singleton, you should clean that cache when you're done:
+// Storing items in a static array.
+SomeClass::$property[] = $item;
+// Flushing the cache when we're done.
+SomeClass::$property = [];
+To prevent this, Laravel limits the memory consumption to 128MB for each
+worker process. You can change the limit by using the --memory option:
+php artisan queue:work --memory=256
+Warning: That worker-level limit should be lower than the
+memory_limit set in your php.ini file.

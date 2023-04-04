@@ -1,0 +1,35 @@
+- Making Jobs Self-contained
+* There's no way we can know for sure when a queued job is going to run. It may run instantly after being sent to the queue, and it may run after a few hours.
+* Since the state of the system may change between the time the job was dispatched and the time it was picked up by a worker to be processed, we need to make sure our jobs are self-contained; meaning they have everything they need to run without relying on any external system state:
+* In this example job, we could have extracted the last commit hash inside the handle method of the job. However, by the time the job runs, new commits may have been sent to the site repository.
+If the purpose of this job was to deploy the latest commit, then extracting the last commit when the job runs would have made sense. But this job deploys the last commit that was sent when the user manually triggered the deployment
+
+-------------- Making Jobs Simple ----------------------
+- A job object that has very complex dependencies will consume a lot of resources.
+
+- Your job class properties should be simple datatypes; strings, integers,booleans, arrays, and the like. Or if you must pass an object, it has to be a simple PHP object that has simple properties
+
+- Laravel service container to resolve an insance 
+
+--------- Making Jobs Light --------------
+
+- Try to make your job payload as light as possible. If you have to pass a big chunk of data to the job, consider storing it somewhere and pass a reference to the job instead.
+
+- If a chain is too long that the payload size will get out of control, consider starting the chain with a few jobs, and add more jobs to the chain from inside the last job
+
+----------- Making Jobs Idempotent ------------
+
+- An idempotent job is a job that may run several times without having any negative side effects
+
+public function handle()
+{
+ if ($this->invoice->refunded) {
+ return $this->delete();
+ }
+ $this->invoice->refund();
+}
+
+ -------- Make Jobs Parallelizable -------
+- Keep in mind that multiple jobs can be running at the same time, which may lead to race conditions when they try to read/write from/to a single resource use funellinf or cache lock .
+
+

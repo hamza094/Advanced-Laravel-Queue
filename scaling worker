@@ -1,0 +1,20 @@
+Scaling workers can happen in the form of:
+1. Adding/Removing servers to/from the cluster.
+2. Starting/Stopping workers on a single server.
+3. Adding/Removing resources to/from a single server
+
+- We'll also need to make sure all the servers are using the same queue
+connection that communicates with the same queue storage driver. For
+example; if we have two servers running workers that consume jobs from
+the database queue connection, we need to make sure both servers are
+connected to the same database instance.
+
+- Scaling on a Fixed Schedule
+If we know exactly when we need to add more workers and when they are
+no longer needed, we can use CRON to start a supervisor process group on
+a fixed schedule and stop it when the workers are no longer needed.
+
+Scaling Based on Workload
+
+A Simpler Scaling Strategy
+ --max-time=240

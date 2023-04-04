@@ -1,0 +1,20 @@
+- When one of your workers picks up a certain job from the queue, Laravel counts it as an attempt. Even if the job didn't run at all, it's still considered
+an attempt. For that reason, you may want to allow your jobs to be
+attempted multiple times before you consider it a failure
+
+- Your worker fails to download the job payload due to a networking
+issue. The worker crashes while unserializing the payload.
+The job timeouts.An unhandled exception was thrown from inside the job.The worker fails to mark the job as processed due to networking
+issues.
+
+- for handle exception use backoff technique
+
+- retry after if worker failure Make sure retry_after is longer than your longest-running job to prevent the job from becoming available again while another worker is still processing a previous attempt.
+
+-rety until
+
+-  If you configure a long job expiration with an unlimited
+number of tries, you should consider setting a reasonable backoff so
+the job doesn't keep popping up in your queue and keeping it busy.
+
+- max exception 

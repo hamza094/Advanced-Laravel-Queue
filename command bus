@@ -1,0 +1,40 @@
+- Dispatching a Job to The Queue
+
+ - Dispatching a Job Immediately
+/  Bus::dispatchNow(new RestartNginx());
+
+- Dispatching a Job After Response
+
+- Dispatching a Chain
+
+- Dispatching a Batch
+/ By default, the entire batch will be marked as failed if any of the jobs fail.
+You can change this behavior by using the allowFailures() method:
+/ Bus::batch([
+ // ...
+])
+->catch(function () {
+ // A batch job has failed!
+})
+->then(function () {
+ // All jobs have successfully run!
+})
+->finally(function () {
+ // All jobs have run! Some may have failed.
+})
+->dispatch();
+
+- Using the dispatch() Helper
+/ dispatch(
+ new SendInvoice($order)
+);
+/ Here, if the SendInvoice job implements the ShouldQueue interface, the
+helper will send it to the queue. Otherwise, it's going to run it immediately
+by invoking the handle method directly or using the sync queue driver.
+/ In this example, dispatching the SendInvoice job will happen after the
+return statement and before the response is sent. At this point, the
+OrderController::store() method's scope is terminating, and that's when
+the Bus::dispatch() method will be called.
+
+- Using the dispatch() Static Method
+/ 

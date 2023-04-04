@@ -1,0 +1,28 @@
+--- Worker Configurations ---
+- connection
+- queue
+- name
+- once
+- stop-when-empty
+- max-jobs
+- max-time
+- force
+- memory
+- sleep
+- backoff
+- timeout
+- tries
+
+----- Job Configurations ----
+- connection
+- queue
+- backoff
+- timeout
+- tries
+- retryUntil
+- delay
+- deleteWhenMissingModels
+
+
+
+

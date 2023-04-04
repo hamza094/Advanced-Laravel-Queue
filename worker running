@@ -1,0 +1,14 @@
+One of the most popular tools is Supervisor, which can be easily installed on
+any UNIX-like operating system:
+- Supervisor Configurations
+- Starting Workers
+- Stopping Workers
+- Restarting Workers
+- Avoiding Memory Leaks
+With that being said, avoiding memory leaks can still be a bit challenging.
+Over time, some references will pile up in the server memory that won't be
+detected by PHP and will cause the server to crash at some point.
+The solution is easy though, restart the workers more often.
+f you don't want to use a CRON task, you can use the --max-jobs and --max time options to limit the number of jobs the worker may process or the time
+it should stay up:
+php artisan queue:work --max-jobs=1000 --max-time=3600

@@ -18,6 +18,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        /*In an application that's built using event-driven programming, a NewOrderSubmitted event has several listeners:*/
+        
     ];
 
     /**

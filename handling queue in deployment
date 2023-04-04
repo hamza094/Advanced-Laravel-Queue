@@ -1,0 +1,8 @@
+php artisan queue:restart
+- This command will send a signal to all running workers instructing them to
+exit after finishing any job in hand. This is called "graceful termination".
+
+- When you send a restart signal to the workers, some of them may not
+restart right away; they'll wait for a job in hand to be processed before exiting.If you are deploying new code along with migrations that'll change the database schema, workers that are still using the old code may fail in the middle of running their last job due to those changes; old code working withthe new database schema!
+To prevent this from happening, you'll need to signal the workers to exit and then wait for them. Only when all workers exit gracefully you can start your deployment.
+To signal the workers to exit, you'll need to use supervisorctl stop in your deployment script. This command will block the execution of the script until all workers are shutdown:
